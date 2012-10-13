@@ -10,7 +10,6 @@ import javax.imageio.stream.ImageOutputStream;
 
 import org.matheusdev.interpolation.FloatInterpolation;
 import org.matheusdev.interpolation.FloatInterpolationFunc;
-import org.matheusdev.noises.SimplexNoiseLayerN;
 import org.matheusdev.noises.SimplexNoiseN;
 import org.matheusdev.util.GifSequenceWriter;
 import org.matheusdev.util.matrix.MatrixNf;
@@ -45,7 +44,7 @@ public final class SimplexNoiseGifGenerator {
 				return 3*t2 - 2*t2*t;
 			}
 		};
-		final MatrixNf content = new SimplexNoiseN(new SimplexNoiseLayerN[] {
+		/*final MatrixNf content = new SimplexNoiseN(new SimplexNoiseLayerN[] {
 				new SimplexNoiseLayerN(64, rand, interpolator, dims),
 				new SimplexNoiseLayerN(32, rand, interpolator, dims),
 				new SimplexNoiseLayerN(8, rand, interpolator, dims),
@@ -55,7 +54,8 @@ public final class SimplexNoiseGifGenerator {
 				32,
 				8,
 				4
-		}, rand, true, dims).get();
+		}, rand, true, dims).get();*/
+		final MatrixNf content = new SimplexNoiseN(5, rand, interpolator, dims).get();
 		long then = System.currentTimeMillis();
 
 		// Creating plane: (outdated. Does not give any advantages.)
