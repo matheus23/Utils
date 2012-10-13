@@ -34,6 +34,7 @@ Currently, the following stuff is implemented:
 ## What can I do with this?
 
 Look at this:
+<br>
 ![Demo GIF][SimplexNoiseDemoImg]
 
 All the Noise values generated for this image are basically gotten from this code:
