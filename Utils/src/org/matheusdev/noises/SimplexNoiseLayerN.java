@@ -1,17 +1,9 @@
 package org.matheusdev.noises;
 
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
 import java.util.Random;
-
-import javax.imageio.ImageIO;
 
 import org.matheusdev.PosIterationCallback;
 import org.matheusdev.interpolation.FloatInterpolation;
-import org.matheusdev.interpolation.FloatInterpolationFunc;
 import org.matheusdev.util.matrix.MatrixNf;
 
 /**
@@ -155,74 +147,4 @@ public class SimplexNoiseLayerN {
 			}
 		}
 	}
-
-	private static int toRGB(int r, int g, int b, int a) {
-		int rgb = a;
-		rgb = (rgb << 8) + (r & 0xFF);
-		rgb = (rgb << 8) + (g & 0xFF);
-		rgb = (rgb << 8) + (b & 0xFF);
-		return rgb;
-	}
-
-	public static void main(String[] args) {
-		int[] dims = { 256, 256 };
-		System.out.println("Creating.");
-//		final MatrixNf content = new SimplexNoiseN(8, new Random(), new FloatInterpolationCubicSpline(), dims).get();
-		final Random rand = new Random();
-		final FloatInterpolation interpolator = new FloatInterpolationFunc() {
-			@Override
-			protected float func(float t) {
-				return t;
-			}
-		};
-		final MatrixNf content = new SimplexNoiseLayerN(32, rand, interpolator, dims).gen().get();
-		System.out.println("Creation finished.");
-		System.out.println("Converting to Image.");
-
-		BufferedImage img = new BufferedImage(dims[0]*2, dims[1]*2, BufferedImage.TYPE_INT_ARGB);
-		for (int x = 0; x < dims[0]*2; x++) {
-			for (int y = 0; y < dims[1]*2; y++) {
-				int greyscale = (int)(((content.get(x%dims[0], y%dims[1])+1)*0.5) * 255);
-				img.setRGB(x, y, toRGB(greyscale, greyscale, greyscale, 255));
-			}
-		}
-
-		String directory = "simplex_noise";
-		File dir = new File(directory);
-		if (!dir.exists()) {
-			dir.mkdir();
-		}
-		String filename = directory + "/" + "image";
-		String suffix = ".png";
-
-		int i = 0;
-		File file;
-		do {
-			file = new File(filename + i + suffix);
-			i++;
-		} while (file.exists());
-		try {
-			file.createNewFile();
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		}
-		System.out.println("Writing to file.");
-		OutputStream stream = null;
-		try {
-			stream = new FileOutputStream(file);
-			ImageIO.write(img, "png", stream);
-		} catch (IOException e) {
-			e.printStackTrace();
-		} finally {
-			if (stream != null) {
-				try {
-					stream.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-		}
-		System.out.println("Finished.");
-	}
-
 }
