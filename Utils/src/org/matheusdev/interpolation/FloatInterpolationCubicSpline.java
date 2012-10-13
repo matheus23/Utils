@@ -13,7 +13,8 @@ public class FloatInterpolationCubicSpline extends FloatInterpolation {
 	@Override
 	public float interpolate(float t, float y0, float x0, float y1, float x1) {
 		// 3 * t^2 - 2 * t^3 [only scaling]
-		return (3*t*t - 2*t*t*t) * (y1 - y0) + y0;
+		float t2 = t*t;
+		return (3*t2 - 2*t2*t) * (y1 - y0) + y0;
 	}
 
 }
