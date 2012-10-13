@@ -41,7 +41,8 @@ public final class SimplexNoiseGifGenerator {
 		final FloatInterpolation interpolator = new FloatInterpolationFunc() {
 			@Override
 			protected float func(float t) {
-				return 3*t*t - 2*t*t*t;
+				float t2 = t*t;
+				return 3*t2 - 2*t2*t;
 			}
 		};
 		final MatrixNf content = new SimplexNoiseN(new SimplexNoiseLayerN[] {
