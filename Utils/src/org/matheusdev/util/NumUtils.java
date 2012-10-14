@@ -12,4 +12,8 @@ public final class NumUtils {
 		return (i < min || i > max);
 	}
 
+	public static float diff(float val1, float val2) {
+		return Math.abs(val1-val2);
+	}
+
 }
