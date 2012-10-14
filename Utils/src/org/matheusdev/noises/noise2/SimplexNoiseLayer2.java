@@ -1,4 +1,4 @@
-package org.matheusdev.noises;
+package org.matheusdev.noises.noise2;
 
 import java.util.Random;
 

@@ -10,6 +10,8 @@
 [GriddedImage.java]: https://github.com/matheus23/Utils/blob/master/Utils/src/org/matheusdev/GriddedImage.java "org.matheusdev.GriddedImage.java"
 [NumUtils.java]: https://github.com/matheus23/Utils/blob/master/Utils/src/org/matheusdev/util/NumUtils.java "org.matheusdev.NumUtils.java"
 [TextFileReader.java]: https://github.com/matheus23/Utils/blob/master/Utils/src/org/matheusdev/util/TextFileReader.java "org.matheusdev.util.TextFileReader.java"
+[Noise2]: https://github.com/matheus23/Utils/tree/master/Utils/src/org/matheusdev/noises/noise2 "org.matheusdev.noises.noise2"
+[Noise3]: https://github.com/matheus23/Utils/tree/master/Utils/src/org/matheusdev/noises/noise3 "org.matheusdev.noises.noise3"
 
 [SimplexNoiseDemoImg]: http://dl.dropbox.com/u/45530199/Programs/SimplexNoiseN/image46.gif "Demo GIF"
 
@@ -27,6 +29,7 @@ Currently, the following stuff is implemented:
 * A "[javatemplater](Templater.java)", which was used to create the Matrix->Array Mapping classes.
 * [1D Simplex Noise](SimplexNoise.java).
 * [Simplex Noise for N Dimensions](SimplexNoiseN.java).
+* [2D](Noise2) and [3D](Noise3) optimized versions of the SimplexNoiseN algorithm.
 * [1D Value Noise](ValueNoise1D.java).
 * Helper for writing [Gif-Animations](GifSequenceWriter.java) to files.
 * A bunch of other Utilities, like [FrameUtils](FrameUtils.java), for positioning java.awt.Frame's in the mid of a desired screen, [GriddedImage](GriddedImage.java) to create png-Image grids for SpriteSheets, [NumUtils](NumUtils.java) and a [TextFileReader](TextFileReader.java).

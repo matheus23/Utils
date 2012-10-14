@@ -10,7 +10,7 @@ import javax.imageio.stream.ImageOutputStream;
 
 import org.matheusdev.interpolation.FloatInterpolation;
 import org.matheusdev.interpolation.FloatInterpolationFunc;
-import org.matheusdev.noises.SimplexNoise3;
+import org.matheusdev.noises.noise3.SimplexNoise3;
 import org.matheusdev.util.GifSequenceWriter;
 import org.matheusdev.util.matrix.matrix3.MatrixN3f;
 

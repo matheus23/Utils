@@ -10,7 +10,7 @@ import javax.imageio.ImageIO;
 
 import org.matheusdev.interpolation.FloatInterpolation;
 import org.matheusdev.interpolation.FloatInterpolationFunc;
-import org.matheusdev.noises.SimplexNoise2;
+import org.matheusdev.noises.noise2.SimplexNoise2;
 import org.matheusdev.util.matrix.matrix2.MatrixN2f;
 
 /**
