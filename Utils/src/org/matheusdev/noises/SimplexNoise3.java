@@ -3,26 +3,27 @@ package org.matheusdev.noises;
 import java.util.Random;
 
 import org.matheusdev.interpolation.FloatInterpolation;
-import org.matheusdev.util.matrix.matrix2.MatrixN2f;
+import org.matheusdev.util.matrix.matrix3.MatrixN3f;
 
 /**
  * @author matheusdev
  *
  */
-public class SimplexNoise2 {
+public class SimplexNoise3 {
 
-	protected static SimplexNoiseLayer2[] layersFromOctaves(
+	protected static SimplexNoiseLayer3[] layersFromOctaves(
 			final int width,
 			final int height,
+			final int depth,
 			final int octaves,
 			final int smoothness,
 			final int increase,
 			final Random rand,
 			final FloatInterpolation interpolator) {
-		SimplexNoiseLayer2[] layers = new SimplexNoiseLayer2[octaves];
+		SimplexNoiseLayer3[] layers = new SimplexNoiseLayer3[octaves];
 		int v = smoothness;
 		for (int i = 0; i < octaves; i++) {
-			layers[i] = new SimplexNoiseLayer2(width, height, v, rand, interpolator);
+			layers[i] = new SimplexNoiseLayer3(width, height, depth, v, rand, interpolator);
 			v *= increase;
 		}
 		return layers;
@@ -38,30 +39,33 @@ public class SimplexNoise2 {
 		return importances;
 	}
 
-	protected final MatrixN2f values;
+	protected final MatrixN3f values;
 
-	public SimplexNoise2(final int width, final int height, final int octaves, final Random rand, final FloatInterpolation interpolator) {
-		this(width, height, layersFromOctaves(width, height, octaves, 4, 2, rand, interpolator), importancesFromOctaves(octaves, 2), rand);
+	public SimplexNoise3(final int width, final int height, final int depth, final int octaves, final Random rand, final FloatInterpolation interpolator) {
+		this(width, height, depth, layersFromOctaves(width, height, depth, octaves, 4, 2, rand, interpolator), importancesFromOctaves(octaves, 2), rand);
 	}
 
-	public SimplexNoise2(final int width, final int height, final SimplexNoiseLayer2[] layers, final float[] weights, final Random rand) {
+	public SimplexNoise3(final int width, final int height, final int depth, final SimplexNoiseLayer3[] layers, final float[] weights, final Random rand) {
 		if (layers.length != weights.length) throw new IllegalArgumentException("layers.length != weights.length");
 
 		for (int i = 0; i < layers.length; i++) {
 			layers[i].gen();
 		}
 
-		values = new MatrixN2f(width, height);
+		values = new MatrixN3f(width, height, depth);
 
 		for (int i = 0; i < layers.length; i++) {
 			final int xoffset = genOffset(width, rand);
 			final int yoffset = genOffset(height, rand);
+			final int zoffset = genOffset(depth, rand);
 
 			for (int x = 0; x < width; x++) {
 				for (int y = 0; y < height; y++) {
-					values.set(
-							values.get(x, y) + (layers[i].get().get((x + xoffset) % width, (y + yoffset) % height) * weights[i]),
-							x, y);
+					for (int z = 0; z < depth; z++) {
+						values.set(
+								values.get(x, y, z) + (layers[i].get().get((x + xoffset) % width, (y + yoffset) % height, (z + zoffset) % depth) * weights[i]),
+								x, y, z);
+					}
 				}
 			}
 		}
@@ -82,7 +86,7 @@ public class SimplexNoise2 {
 		return offset;
 	}
 
-	public MatrixN2f get() {
+	public MatrixN3f get() {
 		return values;
 	}
 
