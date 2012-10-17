@@ -2,7 +2,8 @@ package org.matheusdev;
 
 import java.util.Random;
 
-import org.matheusdev.noises.ValueNoise1D;
+import org.matheusdev.util.gameloop.GameLoop;
+import org.matheusdev.util.gameloop.GameLooper;
 
 
 /**
@@ -15,14 +16,39 @@ public class TestMain {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		Random rand = new Random();
-		ValueNoise1D noise = new ValueNoise1D(257, (rand.nextInt()%50)+25, (rand.nextInt()%50)+25, 1.6f, 2f, rand).gen();
-		for (int i = 0; i < noise.length(); i++) {
-			for (int j = 0; j < noise.get(i)+25; j++) {
-				System.out.print("#");
+		GameLoop loop = new GameLoop(new GameLooper() {
+			final Random rand;
+			{
+				rand = new Random();
 			}
-			System.out.println();
-		}
+			@Override
+			public long getNanoTime() {
+				return System.nanoTime();
+			}
+			@Override
+			public void tick(double delta) {
+				try {
+					// Simulate "lag"
+					Thread.sleep(Math.abs(rand.nextInt() % 8));
+				} catch (InterruptedException e) {}
+				System.out.println("tick (delta: " + delta + ")");
+			}
+			@Override
+			public void render(double fps) {
+				System.out.println("render (fps: " + fps + ")");
+			}
+			@Override
+			public boolean isCloseRequested() {
+				return false;
+			}
+			@Override
+			public void init() {
+			}
+			@Override
+			public void dispose() {
+			}
+		}, GameLoop.Type.LIMITED_RENDER, 60);
+		loop.start();
 	}
 
 }
