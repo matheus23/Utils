@@ -1,7 +1,6 @@
 package org.matheusdev.util;
 
 import java.io.File;
-import java.io.IOException;
 
 /**
  * @author matheusdev
@@ -15,7 +14,7 @@ public class LibPathUtil {
 	 * @param path
 	 * @return
 	 */
-	protected static boolean hasLibrary(String path) {
+	public static boolean hasLibrary(String path) {
 		String[] libraries = System.getProperty("java.library.path").split(File.pathSeparator);
 
 		for (String lib : libraries) {
@@ -30,17 +29,21 @@ public class LibPathUtil {
 	 * @param jarName
 	 * @return
 	 */
-	public static boolean checkLibrary(String libraryPath, String jarName) {
-		if (!hasLibrary(libraryPath)) {
-			try {
-				Runtime.getRuntime().exec(
-						"java -Djava.library.path=\"" + libraryPath + "\" -jar " + jarName);
-			} catch (IOException e) {
-				e.printStackTrace();
+	public static ProcessBuilder checkLibrary(String libPath, String command, String... arguments) {
+		if (!hasLibrary(libPath)) {
+			ProcessBuilder p = null;
+			String[] cmd = new String[arguments.length+1];
+			cmd[0] = command;
+			for (int i = 1; i < cmd.length; i++) {
+				cmd[i] = arguments[i-1];
 			}
-			return true;
+			p = new ProcessBuilder(cmd);
+			p.redirectError(ProcessBuilder.Redirect.PIPE);
+			p.redirectOutput(ProcessBuilder.Redirect.PIPE);
+			p.redirectInput(ProcessBuilder.Redirect.PIPE);
+			return p;
 		}
-		return false;
+		return null;
 	}
 
 }
