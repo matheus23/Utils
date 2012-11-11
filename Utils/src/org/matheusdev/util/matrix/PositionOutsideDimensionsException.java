@@ -12,17 +12,17 @@ public class PositionOutsideDimensionsException extends RuntimeException {
 	}
 
 	private static String getMsg(int[] dimensions, int[] positions) {
-		StringBuilder sb = new StringBuilder("Position is outside the given dimensions.");
+		StringBuilder sb = new StringBuilder("Position is outside the given dimensions: ");
 		sb.append("Positions:[");
-		for (int i = 0; i < dimensions.length; i++) {
-			sb.append(dimensions[i] + (
-					(i == dimensions.length-1) ? ("]") : (", ")
-					));
-		}
-		sb.append(", Dimensions:[");
 		for (int i = 0; i < positions.length; i++) {
 			sb.append(positions[i] + (
 					(i == positions.length-1) ? ("]") : (", ")
+					));
+		}
+		sb.append(", Dimensions:[");
+		for (int i = 0; i < dimensions.length; i++) {
+			sb.append(dimensions[i] + (
+					(i == dimensions.length-1) ? ("]") : (", ")
 					));
 		}
 		return sb.toString();

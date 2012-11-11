@@ -21,7 +21,7 @@ public abstract class MappedMatrix {
 		this.dimensions = dimensions;
 	}
 
-	public int getPosition(int... positions) {
+	protected int getPosition(int... positions) {
 		if (positions.length != dimensions.length) {
 			throw new IllegalArgumentException("\"positions.length\" != \"dimensions.length\"");
 		}

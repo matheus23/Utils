@@ -16,4 +16,11 @@ public final class NumUtils {
 		return Math.abs(val1-val2);
 	}
 
+	public static int clamp(int i, int height) {
+		if (height <= 0) throw new IllegalArgumentException("height <= 0");
+		if (i == 0) return 0;
+		if (i < 0) return height + (i % height);
+		else return i % height;
+	}
+
 }

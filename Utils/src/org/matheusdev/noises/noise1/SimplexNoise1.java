@@ -55,7 +55,7 @@ public class SimplexNoise1 {
 			final int offset = genOffset(values.length, rand);
 
 			for (int i = 0; i < values.length; i++) {
-					values[i] += (layers[layer].get()[(i + offset) % values.length]) * weights[i];
+					values[i] += (layers[layer].get()[(i + offset) % values.length]) * weights[layer];
 			}
 		}
 

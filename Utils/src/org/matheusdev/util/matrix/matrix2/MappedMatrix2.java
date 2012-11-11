@@ -24,7 +24,7 @@ public abstract class MappedMatrix2 {
 		return w*h;
 	}
 
-	public int getPosition(int x, int y) {
+	protected int getPosition(int x, int y) {
 		if (OPTION.PERFORM_CHECKS) {
 			if (NumUtils.outside(x, 0, w-1)) throwDimException(x, y);
 			if (NumUtils.outside(y, 0, h-1)) throwDimException(x, y);
