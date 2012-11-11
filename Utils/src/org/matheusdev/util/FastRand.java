@@ -53,12 +53,12 @@ public class FastRand {
 		return Math.abs((int) randLong());
 	}
 
-	public double randomDouble() {
-		return randLong() / (Double.MAX_VALUE - 1d);
+	public double randDouble() {
+		return randLong() / (Long.MAX_VALUE - 1d);
 	}
 
-	public float randomFloat() {
-		return randLong() / (Float.MAX_VALUE - 1f);
+	public float randFloat() {
+		return randLong() / (Long.MAX_VALUE - 1f);
 	}
 
 	public boolean randBool() {
