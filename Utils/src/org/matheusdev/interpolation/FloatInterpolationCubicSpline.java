@@ -7,6 +7,8 @@ package org.matheusdev.interpolation;
  */
 public class FloatInterpolationCubicSpline extends FloatInterpolation {
 
+	public static final FloatInterpolationCubicSpline inst = new FloatInterpolationCubicSpline();
+
 	/* (non-Javadoc)
 	 * @see org.worldOfCube.client.math.interpolation.FloatInterpolation#interpolate(float, float, float, float, float)
 	 */

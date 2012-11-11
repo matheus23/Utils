@@ -7,6 +7,8 @@ package org.matheusdev.interpolation;
  */
 public class FloatInterpolationLinear extends FloatInterpolation {
 
+	public static final FloatInterpolationLinear inst = new FloatInterpolationLinear();
+
 	/* (non-Javadoc)
 	 * @see org.worldOfCube.client.math.interpolation.FloatInterpolation#interpolate(float, float, float, float)
 	 */
