@@ -38,6 +38,12 @@ public class FastRand {
 		this.seed = getSeed();
 	}
 
+	protected static long getSeed() {
+		return System.currentTimeMillis() + System.nanoTime();
+	}
+
+	/* RANDOM INT AND LONG: */
+
 	public long randLong() {
 		seed ^= (seed << 21);
 		seed ^= (seed >>> 35);
@@ -57,6 +63,24 @@ public class FastRand {
 		return Math.abs((int) randLong());
 	}
 
+	public long randLong(long max) {
+		return randAbsLong() % max;
+	}
+
+	public int randInt(int max) {
+		return randAbsInt() % max;
+	}
+
+	public long randLong(long min, long max) {
+		return randLong(max - min) + min;
+	}
+
+	public int randInt(int min, int max) {
+		return randInt(max - min) + min;
+	}
+
+	/* RANDOM DOUBLE AND FLOAT */
+
 	public double randDouble() {
 		return randLong() / (Long.MAX_VALUE - 1d);
 	}
@@ -73,12 +97,18 @@ public class FastRand {
 		return (randFloat() + 1.0f) / 2.0f;
 	}
 
-	public boolean randBool() {
-		return randLong() > 0;
+	public double randDouble(double min, double max) {
+		return randAbsDouble() * (max - min) + min;
 	}
 
-	protected static long getSeed() {
-		return System.currentTimeMillis() + System.nanoTime();
+	public float randFloat(float min, float max) {
+		return randAbsFloat() * (max - min) + min;
+	}
+
+	/* OTHERS */
+
+	public boolean randBool() {
+		return randLong() > 0;
 	}
 
 }
