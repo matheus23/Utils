@@ -38,7 +38,7 @@ public class FastRand {
 		this.seed = getSeed();
 	}
 
-	protected long randLong() {
+	public long randLong() {
 		seed ^= (seed << 21);
 		seed ^= (seed >>> 35);
 		seed ^= (seed << 4);
@@ -47,6 +47,10 @@ public class FastRand {
 
 	public int randInt() {
 		return (int) randLong();
+	}
+
+	public long randAbsLong() {
+		return Math.abs(randLong());
 	}
 
 	public int randAbsInt() {
@@ -59,6 +63,14 @@ public class FastRand {
 
 	public float randFloat() {
 		return randLong() / (Long.MAX_VALUE - 1f);
+	}
+
+	public double randAbsDouble() {
+		return (randDouble() + 1.0) / 2.0;
+	}
+
+	public float randAbsFloat() {
+		return (randFloat() + 1.0f) / 2.0f;
 	}
 
 	public boolean randBool() {
