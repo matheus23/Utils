@@ -27,6 +27,12 @@ public final class Dist {
 		return Math.sqrt(dx*dx + dy*dy);
 	}
 
+	public static float root(float x0, float y0, float x1, float y1) {
+		float dx = Math.abs(x0-x1);
+		float dy = Math.abs(y0-y1);
+		return (float) Math.sqrt(dx*dx + dy*dy);
+	}
+
 	public static double squared(double x0, double y0, double x1, double y1) {
 		double dx = Math.abs(x0-x1);
 		double dy = Math.abs(y0-y1);
