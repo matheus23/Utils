@@ -129,7 +129,7 @@ public abstract class ResourceHandler<Sheet extends SpriteSheetResource<Sprite>,
 					}
 				}
 				break;
-			case "resources":
+			case "images":
 				isRes = true;
 				break;
 			default:
@@ -145,7 +145,7 @@ public abstract class ResourceHandler<Sheet extends SpriteSheetResource<Sprite>,
 			case "sheet":
 				currentSheet = null;
 				break;
-			case "resources":
+			case "images":
 				isRes = false;
 				break;
 			}
