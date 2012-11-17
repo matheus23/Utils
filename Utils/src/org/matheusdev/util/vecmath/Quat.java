@@ -29,6 +29,12 @@ import java.nio.FloatBuffer;
  */
 public class Quat implements FloatBuffable<Quat> {
 
+	// Pooling:
+	private static final Quat POOL = new Quat();
+	public static Quat getPool() {
+		return POOL.identity();
+	}
+
 	public float x;
 	public float y;
 	public float z;

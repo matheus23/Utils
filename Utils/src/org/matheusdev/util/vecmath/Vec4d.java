@@ -29,6 +29,12 @@ import java.nio.DoubleBuffer;
  */
 public class Vec4d implements DoubleBuffable<Vec4d> {
 
+	// Pooling:
+	private static final Vec4d POOL = new Vec4d();
+	public static Vec4d getPool() {
+		return POOL.set(0, 0, 0, 1);
+	}
+
 	public double x;
 	public double y;
 	public double z;
@@ -106,11 +112,11 @@ public class Vec4d implements DoubleBuffable<Vec4d> {
 		return dest;
 	}
 
-	public Vec4d transform(Mat3 mat) {
+	public Vec4d transform(Mat3d mat) {
 		return transform(mat, this, this);
 	}
 
-	public Vec4d transform(Mat4 mat) {
+	public Vec4d transform(Mat4d mat) {
 		return transform(mat, this, this);
 	}
 
@@ -211,7 +217,7 @@ public class Vec4d implements DoubleBuffable<Vec4d> {
 		return Math.toDegrees(angleRad(v1, v2));
 	}
 
-	public static Vec4d transform(Mat3 l, Vec4d r, Vec4d dst) {
+	public static Vec4d transform(Mat3d l, Vec4d r, Vec4d dst) {
 		dst = getDest(dst);
 
 		double x = l.m00 * r.x + l.m10 * r.y + l.m20 * r.z;
@@ -225,7 +231,7 @@ public class Vec4d implements DoubleBuffable<Vec4d> {
 		return dst;
 	}
 
-	public static Vec4d transform(Mat4 l, Vec4d r, Vec4d dst) {
+	public static Vec4d transform(Mat4d l, Vec4d r, Vec4d dst) {
 		dst = Vec4d.getDest(dst);
 
 		double x = l.m00 * r.x + l.m10 * r.y + l.m20 * r.z + l.m30 * r.w;

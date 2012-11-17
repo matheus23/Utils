@@ -29,13 +29,19 @@ import java.nio.FloatBuffer;
  */
 public class Vec4 implements FloatBuffable<Vec4> {
 
+	// Pooling:
+	private static final Vec4 POOL = new Vec4();
+	public static Vec4 getPool() {
+		return POOL.set(0, 0, 0, 1);
+	}
+
 	public float x;
 	public float y;
 	public float z;
 	public float w;
 
 	public Vec4() {
-		this(0, 0, 0, 0);
+		this(0, 0, 0, 1);
 	}
 
 	public Vec4(float x, float y, float z, float w) {

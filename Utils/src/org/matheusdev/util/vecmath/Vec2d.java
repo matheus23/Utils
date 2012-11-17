@@ -30,6 +30,12 @@ import java.nio.DoubleBuffer;
  */
 public class Vec2d implements DoubleBuffable<Vec2d> {
 
+	// Pooling:
+	private static final Vec2d POOL = new Vec2d();
+	public static Vec2d getPool() {
+		return POOL.set(0, 0);
+	}
+
 	public double x;
 	public double y;
 
@@ -88,6 +94,14 @@ public class Vec2d implements DoubleBuffable<Vec2d> {
 		dest.normalize();
 
 		return dest;
+	}
+
+	public Vec2d transform(Mat4d mat) {
+		return transform(this, mat, this);
+	}
+
+	public Vec2d transform(Mat3d mat) {
+		return transform(this, mat, this);
 	}
 
 	public Vec2d translate(double xt, double yt) {
@@ -178,6 +192,28 @@ public class Vec2d implements DoubleBuffable<Vec2d> {
 
 	public static double angleDeg(Vec2d v1, Vec2d v2) {
 		return Math.toDegrees(angleRad(v1, v2));
+	}
+
+	public static Vec2d transform(Vec2d vec, Mat3d mat, Vec2d dest) {
+		dest = getDest(dest);
+
+		Vec4d vec4 = Vec4d.getPool().set(vec.x, vec.y, 0, 1);
+		vec4.transform(mat);
+		dest.x = vec4.x / vec4.w;
+		dest.y = vec4.y / vec4.w;
+
+		return dest;
+	}
+
+	public static Vec2d transform(Vec2d vec, Mat4d mat, Vec2d dest) {
+		dest = getDest(dest);
+
+		Vec4d vec4 = Vec4d.getPool().set(vec.x, vec.y, 0, 1);
+		vec4.transform(mat);
+		dest.x = vec4.x / vec4.w;
+		dest.y = vec4.y / vec4.w;
+
+		return dest;
 	}
 
 	protected static Vec2d getDest(Vec2d dest) {

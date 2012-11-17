@@ -29,6 +29,12 @@ import java.nio.FloatBuffer;
  */
 public class Mat4 implements MatFloatBuffable<Mat4> {
 
+	// Pooling:
+	private static final Mat4 POOL = new Mat4();
+	public static Mat4 getPool() {
+		return POOL.identity();
+	}
+
 	/* Templates:
 
 	 * Normal:

@@ -29,6 +29,12 @@ import java.nio.FloatBuffer;
  */
 public class Mat3 implements MatFloatBuffable<Mat3> {
 
+	// Pooling:
+	private static final Mat3 POOL = new Mat3();
+	public static Mat3 getPool() {
+		return POOL.identity();
+	}
+
 	public float m00, m01, m02;
 	public float m10, m11, m12;
 	public float m20, m21, m22;

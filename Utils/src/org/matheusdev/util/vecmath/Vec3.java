@@ -29,6 +29,12 @@ import java.nio.FloatBuffer;
  */
 public class Vec3 implements FloatBuffable<Vec3> {
 
+	// Pooling:
+	private static final Vec3 POOL = new Vec3();
+	public static Vec3 getPool() {
+		return POOL.set(0, 0, 0);
+	}
+
 	public float x;
 	public float y;
 	public float z;
@@ -99,6 +105,14 @@ public class Vec3 implements FloatBuffable<Vec3> {
 		dest.normalize();
 
 		return dest;
+	}
+
+	public Vec3 transform(Mat3 mat) {
+		return transform(this, mat, this);
+	}
+
+	public Vec3 transform(Mat4 mat) {
+		return transform(this, mat, this);
 	}
 
 	/* (non-Javadoc)
@@ -200,6 +214,28 @@ public class Vec3 implements FloatBuffable<Vec3> {
 
 	public static float angleDeg(Vec3 v1, Vec3 v2) {
 		return (float) Math.toDegrees(angleRad(v1, v2));
+	}
+
+	public static Vec3 transform(Vec3 vec, Mat3 mat, Vec3 dest) {
+		dest = getDest(dest);
+
+		Vec4 vec4 = Vec4.getPool().set(vec.x, vec.y, vec.z, 1);
+		vec4.transform(mat);
+		dest.x = vec4.x / vec4.w;
+		dest.y = vec4.y / vec4.w;
+
+		return dest;
+	}
+
+	public static Vec3 transform(Vec3 vec, Mat4 mat, Vec3 dest) {
+		dest = getDest(dest);
+
+		Vec4 vec4 = Vec4.getPool().set(vec.x, vec.y, vec.z, 1);
+		vec4.transform(mat);
+		dest.x = vec4.x / vec4.w;
+		dest.y = vec4.y / vec4.w;
+
+		return dest;
 	}
 
 	protected static Vec3 getDest(Vec3 dest) {

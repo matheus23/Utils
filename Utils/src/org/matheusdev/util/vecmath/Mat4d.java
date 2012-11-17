@@ -29,6 +29,12 @@ import java.nio.DoubleBuffer;
  */
 public class Mat4d implements MatDoubleBuffable<Mat4d> {
 
+	// Pooling:
+	private static final Mat4d POOL = new Mat4d();
+	public static Mat4d getPool() {
+		return POOL.identity();
+	}
+
 	/* Templates:
 
 	 * Normal:

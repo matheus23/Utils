@@ -29,6 +29,12 @@ import java.nio.DoubleBuffer;
  */
 public class Mat3d implements MatDoubleBuffable<Mat3d> {
 
+	// Pooling:
+	private static final Mat3d POOL = new Mat3d();
+	public static Mat3d getPool() {
+		return POOL.identity();
+	}
+
 	public double m00, m01, m02;
 	public double m10, m11, m12;
 	public double m20, m21, m22;
