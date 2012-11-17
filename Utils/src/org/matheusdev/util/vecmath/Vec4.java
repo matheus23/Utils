@@ -100,7 +100,12 @@ public class Vec4 implements FloatBuffable<Vec4> {
 	}
 
 	public Vec4 normalize() {
-		return scale(len());
+		float len = len();
+		this.x /= len;
+		this.y /= len;
+		this.z /= len;
+		this.w /= len;
+		return this;
 	}
 
 	public Vec4 normalize(Vec4 dest) {

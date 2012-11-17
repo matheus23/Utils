@@ -84,7 +84,10 @@ public class Vec2d implements DoubleBuffable<Vec2d> {
 	}
 
 	public Vec2d normalize() {
-		return scale(len());
+		double len = len();
+		this.x /= len;
+		this.y /= len;
+		return this;
 	}
 
 	public Vec2d normalize(Vec2d dest) {

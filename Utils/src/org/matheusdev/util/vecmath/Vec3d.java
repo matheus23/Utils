@@ -95,7 +95,11 @@ public class Vec3d implements DoubleBuffable<Vec3d> {
 	}
 
 	public Vec3d normalize() {
-		return scale(len());
+		double len = len();
+		this.x /= len;
+		this.y /= len;
+		this.z /= len;
+		return this;
 	}
 
 	public Vec3d normalize(Vec3d dest) {

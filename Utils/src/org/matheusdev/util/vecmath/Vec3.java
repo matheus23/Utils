@@ -95,7 +95,11 @@ public class Vec3 implements FloatBuffable<Vec3> {
 	}
 
 	public Vec3 normalize() {
-		return scale(len());
+		float len = len();
+		this.x /= len;
+		this.y /= len;
+		this.z /= len;
+		return this;
 	}
 
 	public Vec3 normalize(Vec3 dest) {

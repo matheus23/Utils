@@ -100,7 +100,12 @@ public class Vec4d implements DoubleBuffable<Vec4d> {
 	}
 
 	public Vec4d normalize() {
-		return scale(len());
+		double len = len();
+		this.x /= len;
+		this.y /= len;
+		this.z /= len;
+		this.w /= len;
+		return this;
 	}
 
 	public Vec4d normalize(Vec4d dest) {

@@ -83,7 +83,10 @@ public class Vec2 implements FloatBuffable<Vec2> {
 	}
 
 	public Vec2 normalize() {
-		return scale(len());
+		float len = len();
+		this.x /= len;
+		this.y /= len;
+		return this;
 	}
 
 	public Vec2 normalize(Vec2 dest) {
