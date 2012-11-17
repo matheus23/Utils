@@ -119,6 +119,14 @@ public class Vec2d implements DoubleBuffable<Vec2d> {
 		return this;
 	}
 
+	public Vec2d perpRight() {
+		return perpRight(this, this);
+	}
+
+	public Vec2d perpLeft() {
+		return perpLeft(this, this);
+	}
+
 	/* (non-Javadoc)
 	 * @see org.matheusdev.util.vecmath.doubleBuffable#load(java.nio.doubleBuffer)
 	 */
@@ -212,6 +220,30 @@ public class Vec2d implements DoubleBuffable<Vec2d> {
 		vec4.transform(mat);
 		dest.x = vec4.x / vec4.w;
 		dest.y = vec4.y / vec4.w;
+
+		return dest;
+	}
+
+	public static Vec2d perpRight(Vec2d vec, Vec2d dest) {
+		dest = getDest(dest);
+
+		double x = vec.x;
+		double y = vec.y;
+
+		dest.x = y;
+		dest.y = -x;
+
+		return dest;
+	}
+
+	public static Vec2d perpLeft(Vec2d vec, Vec2d dest) {
+		dest = getDest(dest);
+
+		double x = vec.x;
+		double y = vec.y;
+
+		dest.x = -y;
+		dest.y = x;
 
 		return dest;
 	}

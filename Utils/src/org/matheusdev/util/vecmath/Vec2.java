@@ -118,6 +118,14 @@ public class Vec2 implements FloatBuffable<Vec2> {
 		return transform(this, mat, this);
 	}
 
+	public Vec2 perpRight() {
+		return perpRight(this, this);
+	}
+
+	public Vec2 perpLeft() {
+		return perpLeft(this, this);
+	}
+
 	/* (non-Javadoc)
 	 * @see org.matheusdev.util.vecmath.FloatBuffable#load(java.nio.FloatBuffer)
 	 */
@@ -211,6 +219,30 @@ public class Vec2 implements FloatBuffable<Vec2> {
 		vec4.transform(mat);
 		dest.x = vec4.x / vec4.w;
 		dest.y = vec4.y / vec4.w;
+
+		return dest;
+	}
+
+	public static Vec2 perpRight(Vec2 vec, Vec2 dest) {
+		dest = getDest(dest);
+
+		float x = vec.x;
+		float y = vec.y;
+
+		dest.x = y;
+		dest.y = -x;
+
+		return dest;
+	}
+
+	public static Vec2 perpLeft(Vec2 vec, Vec2 dest) {
+		dest = getDest(dest);
+
+		float x = vec.x;
+		float y = vec.y;
+
+		dest.x = -y;
+		dest.y = x;
 
 		return dest;
 	}
