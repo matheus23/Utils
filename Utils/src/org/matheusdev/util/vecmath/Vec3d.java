@@ -29,6 +29,8 @@ import java.nio.DoubleBuffer;
  */
 public class Vec3d implements DoubleBuffable<Vec3d> {
 
+	public static final Vec3d UP = new Vec3d(0, 0, 1);
+
 	// Pooling:
 	private static final Vec3d POOL = new Vec3d();
 	public static Vec3d getPool() {

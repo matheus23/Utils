@@ -29,6 +29,8 @@ import java.nio.FloatBuffer;
  */
 public class Vec3 implements FloatBuffable<Vec3> {
 
+	public static final Vec3 UP = new Vec3(0, 0, 1);
+
 	// Pooling:
 	private static final Vec3 POOL = new Vec3();
 	public static Vec3 getPool() {
