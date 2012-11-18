@@ -43,11 +43,14 @@ public class Quad implements SATObject {
 	protected Vec2 botRightCached;
 	protected Vec2 botLeftCached;
 
-	protected Vec2 vertNormal;
-	protected Vec2 horizNormal;
+	protected Vec2 topNormal;
+	protected Vec2 rightNormal;
+	protected Vec2 botNormal;
+	protected Vec2 leftNormal;
 
 	protected Vec2[] verticesCached;
 	protected Vec2[] normalsCached;
+	protected Vec2[] satNormalCache;
 
 	protected Rect aabb;
 
@@ -69,7 +72,8 @@ public class Quad implements SATObject {
 		this.botLeft = new Vec2(center.x - hw, center.y + hh);
 
 		this.verticesCached = new Vec2[4];
-		this.normalsCached = new Vec2[2];
+		this.normalsCached = new Vec2[4];
+		this.satNormalCache = new Vec2[2];
 		this.mat = new Mat4();
 		this.aabb = new Rect();
 		updateFromMatrix();
@@ -87,8 +91,10 @@ public class Quad implements SATObject {
 
 		centerCached = Vec2.transform(center, mat, centerCached);
 
-		vertNormal = calculateNormal(topLeft, topRight, vertNormal);
-		horizNormal = calculateNormal(topLeft, botLeft, horizNormal);
+		topNormal = calculateNormal(topLeftCached, topRightCached, topNormal);
+		rightNormal = calculateNormal(topRightCached, botRightCached, rightNormal);
+		botNormal = calculateNormal(botRightCached, botLeftCached, botNormal);
+		leftNormal = calculateNormal(botLeftCached, topLeftCached, leftNormal);
 
 		return this;
 	}
@@ -121,15 +127,24 @@ public class Quad implements SATObject {
 		return verticesCached;
 	}
 
+	public Vec2[] getTransformedNormals() {
+		normalsCached[0] = topNormal;
+		normalsCached[1] = rightNormal;
+		normalsCached[2] = botNormal;
+		normalsCached[3] = leftNormal;
+
+		return normalsCached;
+	}
+
 	/* (non-Javadoc)
 	 * @see org.matheusdev.util.collision.SATObject#getAxes()
 	 */
 	@Override
 	public Vec2[] getAxes() {
-		normalsCached[0] = vertNormal;
-		normalsCached[1] = horizNormal;
+		satNormalCache[0] = topNormal;
+		satNormalCache[1] = rightNormal;
 
-		return normalsCached;
+		return satNormalCache;
 	}
 
 	/* (non-Javadoc)
