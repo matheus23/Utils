@@ -12,8 +12,10 @@
 [TextFileReader.java]: https://github.com/matheus23/Utils/blob/master/Utils/src/org/matheusdev/util/TextFileReader.java "org.matheusdev.util.TextFileReader.java"
 [Noise2]: https://github.com/matheus23/Utils/tree/master/Utils/src/org/matheusdev/noises/noise2 "org.matheusdev.noises.noise2"
 [Noise3]: https://github.com/matheus23/Utils/tree/master/Utils/src/org/matheusdev/noises/noise3 "org.matheusdev.noises.noise3"
+[Vecmath]: https://github.com/matheus23/Utils/tree/master/Utils/src/org/matheusdev/util/vecmath "org.matheusdev.util.vecmath"
+[Collision]: https://github.com/matheus23/Utils/tree/master/Utils/src/org/matheusdev/util/collision "org.matheusdev.util.collision"
 
-[SimplexNoiseDemoImg]: http://dl.dropbox.com/u/45530199/Programs/SimplexNoiseN/image46.gif "Demo GIF"
+[SimplexNoiseDemoImg]: http://dl.dropbox.com/u/45530199/Programs/SimplexNoiseN/image37.gif "Demo GIF"
 
 # MatheusDev's Utils
 
@@ -24,15 +26,18 @@ This is a collection of useful classes in java, without dependencies to outer li
 ## What does it have?
 
 Currently, the following stuff is implemented:
-* ["Matrix" -> Array mapping](MatrixMapping) for N dimensions.
-* Optimized [2D](Matrix2Mapping) and [3D](Matrix3Mapping) versions of the above.
-* A "[javatemplater](Templater.java)", which was used to create the Matrix->Array Mapping classes.
-* [1D Simplex Noise](SimplexNoise.java).
-* [Simplex Noise for N Dimensions](SimplexNoiseN.java).
-* [2D](Noise2) and [3D](Noise3) optimized versions of the SimplexNoiseN algorithm.
-* [1D Value Noise](ValueNoise1D.java).
-* Helper for writing [Gif-Animations](GifSequenceWriter.java) to files.
-* A bunch of other Utilities, like [FrameUtils](FrameUtils.java), for positioning java.awt.Frame's in the mid of a desired screen, [GriddedImage](GriddedImage.java) to create png-Image grids for SpriteSheets, [NumUtils](NumUtils.java) and a [TextFileReader](TextFileReader.java).
+
+* ["Matrix" -> Array mapping][MatrixMapping] for N dimensions.
+* Optimized [2D][Matrix2Mapping] and [3D][Matrix3Mapping] versions of the above.
+* A "[javatemplater][Templater.java]", which was used to create the Matrix->Array Mapping classes.
+* [1D Simplex Noise][SimplexNoise.java].
+* [Simplex Noise for N Dimensions][SimplexNoiseN.java].
+* [2D][Noise2] and [3D][Noise3] optimized versions of the SimplexNoiseN algorithm.
+* [1D Value Noise][ValueNoise1D.java].
+* Helper for writing [Gif-Animations][GifSequenceWriter.java] to files.
+* Lots of [Vector math utilities][Vecmath] for multiplying matrices, vectors, etc.
+* A [collision detection framework][Collision] using the Seperating Axis Theorem (SAT) and rotateable Quads and Polygons.
+* A bunch of other Utilities, like [FrameUtils][FrameUtils.java], for positioning java.awt.Frame's in the mid of a desired screen, [GriddedImage][GriddedImage.java] to create png-Image grids for SpriteSheets, [NumUtils][NumUtils.java] and a [TextFileReader][TextFileReader.java].
 
 ## What can I do with this?
 
