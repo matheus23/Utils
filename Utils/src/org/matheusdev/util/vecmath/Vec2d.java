@@ -130,6 +130,14 @@ public class Vec2d implements DoubleBuffable<Vec2d> {
 		return perpLeft(this, this);
 	}
 
+	public Vec2d rotateRad(double alpha) {
+		return rotateRad(this, alpha, this);
+	}
+
+	public Vec2d rotateDeg(double alpha) {
+		return rotateDeg(this, alpha, this);
+	}
+
 	/* (non-Javadoc)
 	 * @see org.matheusdev.util.vecmath.doubleBuffable#load(java.nio.doubleBuffer)
 	 */
@@ -249,6 +257,25 @@ public class Vec2d implements DoubleBuffable<Vec2d> {
 		dest.y = x;
 
 		return dest;
+	}
+
+	public static Vec2d rotateRad(Vec2d vec, double alpha, Vec2d dest) {
+		dest = getDest(dest);
+
+		double c = Math.cos(alpha);
+		double s = Math.sin(alpha);
+
+		double x = vec.x * c - vec.y * s;
+		double y = vec.x * s + vec.y * c;
+
+		dest.x = x;
+		dest.y = y;
+
+		return dest;
+	}
+
+	public static Vec2d rotateDeg(Vec2d vec, double alpha, Vec2d dest) {
+		return rotateRad(vec, Math.toRadians(alpha), dest);
 	}
 
 	protected static Vec2d getDest(Vec2d dest) {

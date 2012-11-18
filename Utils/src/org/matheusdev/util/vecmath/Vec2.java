@@ -129,6 +129,14 @@ public class Vec2 implements FloatBuffable<Vec2> {
 		return perpLeft(this, this);
 	}
 
+	public Vec2 rotateRad(float alpha) {
+		return rotateRad(this, alpha, this);
+	}
+
+	public Vec2 rotateDeg(float alpha) {
+		return rotateDeg(this, alpha, this);
+	}
+
 	/* (non-Javadoc)
 	 * @see org.matheusdev.util.vecmath.FloatBuffable#load(java.nio.FloatBuffer)
 	 */
@@ -248,6 +256,25 @@ public class Vec2 implements FloatBuffable<Vec2> {
 		dest.y = x;
 
 		return dest;
+	}
+
+	public static Vec2 rotateRad(Vec2 vec, float alpha, Vec2 dest) {
+		dest = getDest(dest);
+
+		float c = (float) Math.cos(alpha);
+		float s = (float) Math.sin(alpha);
+
+		float x = vec.x * c - vec.y * s;
+		float y = vec.x * s + vec.y * c;
+
+		dest.x = x;
+		dest.y = y;
+
+		return dest;
+	}
+
+	public static Vec2 rotateDeg(Vec2 vec, float alpha, Vec2 dest) {
+		return rotateRad(vec, (float) Math.toRadians(alpha), dest);
 	}
 
 	protected static Vec2 getDest(Vec2 dest) {
