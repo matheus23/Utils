@@ -53,6 +53,7 @@ public class Quad implements SATObject {
 	protected Vec2[] satNormalCache;
 
 	protected Rect aabb;
+	protected Circle circBounds;
 
 	protected Mat4 mat;
 
@@ -76,6 +77,7 @@ public class Quad implements SATObject {
 		this.satNormalCache = new Vec2[2];
 		this.mat = new Mat4();
 		this.aabb = new Rect();
+		this.circBounds = new Circle(center, (float) Math.sqrt(hw * hw + hh * hh));
 		updateFromMatrix();
 	}
 
@@ -191,6 +193,14 @@ public class Quad implements SATObject {
 		float w = maxx-minx;
 		float h = maxy-miny;
 		return aabb.set(minx, miny, w, h);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.matheusdev.util.collision.Easifyable#getBounds()
+	 */
+	@Override
+	public Circle getBounds() {
+		return circBounds.setCenter(centerCached);
 	}
 
 }

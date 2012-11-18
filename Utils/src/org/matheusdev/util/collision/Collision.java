@@ -36,7 +36,7 @@ public final class Collision {
 	private Collision() {
 	}
 
-	public static boolean intersect(Rect r1, Rect r2) {
+	public static boolean rectVsRect(Rect r1, Rect r2) {
 		// Sperating axis theorem simplified for AABBes.
 		if ((r1.x >= (r2.x + r2.w)) || ((r1.x + r1.w) <= r2.x)) {
 			return false;
@@ -47,12 +47,29 @@ public final class Collision {
 		return true;
 	}
 
-	public static boolean contains(Rect r, Vec2 vec) {
+	public static boolean circleVsCircle(Circle c1, Circle c2) {
+		float dx = c2.getCenter().x - c1.getCenter().x;
+		float dy = c2.getCenter().y - c1.getCenter().y;
+		float radii = c1.getRadius() + c2.getRadius();
+		//      Squared Distance   squared "projections" of the circles
+		return (dx * dx + dy * dy) < (radii * radii);
+	}
+
+	public static boolean rectContainsVec(Rect r, Vec2 vec) {
 		return (vec.x >= r.x && vec.y >= r.y && vec.x < r.right() && vec.y < r.bottom());
 	}
 
-	public static MinimalTranslationVector getSAT(SATObject obj0, SATObject obj1) {
-		if (intersect(obj0.getAABB(), obj1.getAABB())) {
+	public static boolean lineVsPoly(Vec2 start, Vec2 end, SATObject obj) {
+		Vec2 normal = new Vec2(end.x-start.x, end.y-start.y);
+
+		Vec2 proj0 = obj.project(normal);
+		Vec2 proj1 = new Vec2(Vec2.dot(start, normal), Vec2.dot(end, normal));
+
+		return !noProjOverlap(proj0, proj1);
+	}
+
+	public static MinimalTranslationVector polyVsPolyMTV(SATObject obj0, SATObject obj1) {
+		if (circleVsCircle(obj0.getBounds(), obj1.getBounds())) {
 			objectsTested++;
 			double overlap = Double.MAX_VALUE;
 			Vec2 smallest = null;
@@ -99,8 +116,8 @@ public final class Collision {
 		}
 	}
 
-	public static boolean testSAT(SATObject obj0, SATObject obj1) {
-		if (intersect(obj0.getAABB(), obj1.getAABB())) {
+	public static boolean polyVsPoly(SATObject obj0, SATObject obj1) {
+		if (circleVsCircle(obj0.getBounds(), obj1.getBounds())) {
 			objectsTested++;
 			Vec2[] axes0 = obj0.getAxes();
 			Vec2[] axes1 = obj1.getAxes();

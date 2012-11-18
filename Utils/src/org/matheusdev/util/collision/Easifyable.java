@@ -21,16 +21,13 @@
  */
 package org.matheusdev.util.collision;
 
-import org.matheusdev.util.vecmath.Vec2;
-
 /**
  * @author matheusdev
  *
  */
-public interface SATObject extends Easifyable {
+public interface Easifyable {
 
-	public Vec2[] getAxes();
-
-	public Vec2 project(Vec2 axis);
+	public Rect getAABB();
+	public Circle getBounds();
 
 }

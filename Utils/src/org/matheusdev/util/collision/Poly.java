@@ -38,6 +38,7 @@ public class Poly implements SATObject {
 	protected final Vec2[] verticesCached;
 	protected final Vec2[] normals;
 	protected Rect aabb;
+	protected Circle circBounds;
 	protected Mat4 mat;
 
 	public Poly(Vec2... vertices) {
@@ -54,6 +55,7 @@ public class Poly implements SATObject {
 		for (int i = 0; i < normals.length; i++) normals[i] = new Vec2();
 		this.mat = new Mat4();
 		this.aabb = new Rect();
+		this.circBounds = createCircularBounds(circBounds);
 		updateFromMatrix();
 	}
 
@@ -92,6 +94,19 @@ public class Poly implements SATObject {
 		Vec2 v0 = getTransformedVertex(side);
 		Vec2 v1 = getTransformedVertex(side + 1);
 		return normals[side].set(v1.x - v0.x, v1.y - v0.y).perpLeft().normalize();
+	}
+
+	protected Circle createCircularBounds(Circle dest) {
+		float maxDist = 0f;
+
+		for (int i = 0; i < vertices.length; i++) {
+			float dx = vertices[i].x - center.x;
+			float dy = vertices[i].y - center.y;
+			maxDist = Math.max(maxDist, (float) Math.sqrt(dx * dx + dy * dy));
+		}
+		if (dest == null) dest = new Circle(null, 0f);
+		dest.set(centerCached, maxDist);
+		return dest;
 	}
 
 	public Mat4 getMatrix() {
@@ -178,6 +193,14 @@ public class Poly implements SATObject {
 		float w = maxx-minx;
 		float h = maxy-miny;
 		return aabb.set(minx, miny, w, h);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.matheusdev.util.collision.Easifyable#getBounds()
+	 */
+	@Override
+	public Circle getBounds() {
+		return circBounds.setCenter(centerCached);
 	}
 
 }
