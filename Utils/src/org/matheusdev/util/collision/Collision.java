@@ -30,6 +30,9 @@ import org.matheusdev.util.vecmath.Vec2;
  */
 public final class Collision {
 
+	public static long axesTested = 0;
+	public static long objectsTested = 0;
+
 	private Collision() {
 	}
 
@@ -50,6 +53,7 @@ public final class Collision {
 
 	public static MinimalTranslationVector getSAT(SATObject obj0, SATObject obj1) {
 		if (intersect(obj0.getAABB(), obj1.getAABB())) {
+			objectsTested++;
 			double overlap = Double.MAX_VALUE;
 			Vec2 smallest = null;
 
@@ -57,6 +61,7 @@ public final class Collision {
 			Vec2[] axes1 = obj1.getAxes();
 
 			for (Vec2 axis : axes0) {
+				axesTested++;
 				Vec2 proj0 = obj0.project(axis);
 				Vec2 proj1 = obj1.project(axis);
 
@@ -73,6 +78,7 @@ public final class Collision {
 			}
 
 			for (Vec2 axis : axes1) {
+				axesTested++;
 				Vec2 proj0 = obj0.project(axis);
 				Vec2 proj1 = obj1.project(axis);
 
@@ -95,10 +101,12 @@ public final class Collision {
 
 	public static boolean testSAT(SATObject obj0, SATObject obj1) {
 		if (intersect(obj0.getAABB(), obj1.getAABB())) {
+			objectsTested++;
 			Vec2[] axes0 = obj0.getAxes();
 			Vec2[] axes1 = obj1.getAxes();
 
 			for (Vec2 axis : axes0) {
+				axesTested++;
 				Vec2 proj0 = obj0.project(axis);
 				Vec2 proj1 = obj1.project(axis);
 
@@ -108,6 +116,7 @@ public final class Collision {
 			}
 
 			for (Vec2 axis : axes1) {
+				axesTested++;
 				Vec2 proj0 = obj0.project(axis);
 				Vec2 proj1 = obj1.project(axis);
 
