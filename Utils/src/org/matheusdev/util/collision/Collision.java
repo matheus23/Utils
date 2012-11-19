@@ -68,10 +68,10 @@ public final class Collision {
 		return !noProjOverlap(proj0, proj1);
 	}
 
-	public static MinimalTranslationVector polyVsPolyMTV(SATObject obj0, SATObject obj1) {
+	public static Vec2 polyVsPolyMTV(SATObject obj0, SATObject obj1) {
 		if (circleVsCircle(obj0.getBounds(), obj1.getBounds())) {
 			objectsTested++;
-			double overlap = Double.MAX_VALUE;
+			float overlap = Float.MAX_VALUE;
 			Vec2 smallest = null;
 
 			Vec2[] axes0 = obj0.getAxes();
@@ -85,7 +85,7 @@ public final class Collision {
 				if (noProjOverlap(proj0, proj1)) {
 					return null;
 				} else {
-					double o = projOverlap(proj0, proj1);
+					float o = projOverlap(proj0, proj1);
 
 					if (o < overlap) {
 						overlap = o;
@@ -102,7 +102,7 @@ public final class Collision {
 				if (noProjOverlap(proj0, proj1)) {
 					return null;
 				} else {
-					double o = projOverlap(proj0, proj1);
+					float o = projOverlap(proj0, proj1);
 
 					if (o < overlap) {
 						overlap = o;
@@ -110,9 +110,26 @@ public final class Collision {
 					}
 				}
 			}
-			return new MinimalTranslationVector(smallest, overlap);
+			Vec2 mtv = new Vec2(smallest.x * overlap, smallest.y * overlap);
+			System.out.println(overlap);
+			return mtv;
 		} else {
 			return null;
+		}
+	}
+
+	public static boolean polyVsCircle(SATObject obj, Circle circ) {
+		if (circleVsCircle(obj.getBounds(), circ)) {
+			objectsTested++;
+			Vec2[] vertices = obj.getTransformedVertices();
+			Vec2[] axes = new Vec2[vertices.length];
+
+			for (int i = 0; i < axes.length; i++) {
+				 axes[i] = new Vec2(circ.getCenter().x - vertices[i].x, circ.getCenter().y - vertices[i].y).normalize();
+			}
+			return seperatingAxesTest(axes, obj, circ);
+		} else {
+			return false;
 		}
 	}
 
@@ -122,29 +139,33 @@ public final class Collision {
 			Vec2[] axes0 = obj0.getAxes();
 			Vec2[] axes1 = obj1.getAxes();
 
-			for (Vec2 axis : axes0) {
-				axesTested++;
-				Vec2 proj0 = obj0.project(axis);
-				Vec2 proj1 = obj1.project(axis);
-
-				if (noProjOverlap(proj0, proj1)) {
-					return false;
-				}
-			}
-
-			for (Vec2 axis : axes1) {
-				axesTested++;
-				Vec2 proj0 = obj0.project(axis);
-				Vec2 proj1 = obj1.project(axis);
-
-				if (noProjOverlap(proj0, proj1)) {
-					return false;
-				}
-			}
-			return true;
+			return seperatingAxesTest(axes0, axes1, obj0, obj1);
 		} else {
 			return false;
 		}
+	}
+
+	public static boolean seperatingAxesTest(Vec2[] axes0, Vec2[] axes1, Projectable p0, Projectable p1) {
+		if (!seperatingAxesTest(axes0, p0, p1)) {
+			return false;
+		}
+		if (!seperatingAxesTest(axes1, p0, p1)) {
+			return false;
+		}
+		return true;
+	}
+
+	public static boolean seperatingAxesTest(Vec2[] axes, Projectable p0, Projectable p1) {
+		for (Vec2 axis : axes) {
+			axesTested++;
+			Vec2 proj0 = p0.project(axis);
+			Vec2 proj1 = p1.project(axis);
+
+			if (noProjOverlap(proj0, proj1)) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	private static boolean noProjOverlap(Vec2 proj0, Vec2 proj1) {
@@ -152,7 +173,9 @@ public final class Collision {
 	}
 
 	private static float projOverlap(Vec2 proj0, Vec2 proj1) {
-		return Math.min(Math.abs(proj0.x - proj1.y), Math.abs(proj0.y - proj1.x));
+		float d0 = proj1.y - proj0.x;
+		float d1 = proj1.x - proj0.y;
+		return Math.abs((d0 < -d1) ? d0 : d1);
 	}
 
 }

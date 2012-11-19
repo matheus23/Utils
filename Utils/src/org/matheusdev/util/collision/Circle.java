@@ -27,7 +27,7 @@ import org.matheusdev.util.vecmath.Vec2;
  * @author matheusdev
  *
  */
-public class Circle implements Easifyable {
+public class Circle implements Easifyable, Projectable {
 
 	protected Vec2 center;
 	protected float radius;
@@ -95,6 +95,18 @@ public class Circle implements Easifyable {
 	@Override
 	public Circle getBounds() {
 		return this;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.matheusdev.util.collision.Projectable#project(org.matheusdev.util.vecmath.Vec2)
+	 */
+	@Override
+	public Vec2 project(Vec2 axis) {
+		Vec2 vertex0 = new Vec2(axis.x, axis.y).scale(radius).translate(center.x, center.y);
+		Vec2 vertex1 = new Vec2(-axis.x, -axis.y).scale(radius).translate(center.x, center.y);
+		float p0 = Vec2.dot(vertex0, axis);
+		float p1 = Vec2.dot(vertex1, axis);
+		return new Vec2(Math.min(p0, p1), Math.max(p0, p1));
 	}
 
 }

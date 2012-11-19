@@ -27,10 +27,10 @@ import org.matheusdev.util.vecmath.Vec2;
  * @author matheusdev
  *
  */
-public interface SATObject extends Easifyable {
+public interface SATObject extends Easifyable, Projectable {
 
 	public Vec2[] getAxes();
 
-	public Vec2 project(Vec2 axis);
+	public Vec2[] getTransformedVertices();
 
 }

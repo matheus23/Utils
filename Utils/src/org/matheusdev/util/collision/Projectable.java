@@ -27,14 +27,8 @@ import org.matheusdev.util.vecmath.Vec2;
  * @author matheusdev
  *
  */
-public class MinimalTranslationVector {
+public interface Projectable {
 
-	public final Vec2 axis;
-	public final double length;
-
-	public MinimalTranslationVector(Vec2 axis, double length) {
-		this.axis = axis;
-		this.length = length;
-	}
+	public Vec2 project(Vec2 axis);
 
 }
