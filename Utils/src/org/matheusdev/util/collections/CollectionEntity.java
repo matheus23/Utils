@@ -19,16 +19,16 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package org.matheusdev.util.collision;
+package org.matheusdev.util.collections;
 
-import org.matheusdev.util.vecmath.Vec2;
+import org.matheusdev.util.collision.Rect;
 
 /**
  * @author matheusdev
  *
  */
-public interface Projectable {
+public interface CollectionEntity {
 
-	public Vec2 project(Vec2 axis, Vec2 dest);
+	public Rect getAABB();
 
 }

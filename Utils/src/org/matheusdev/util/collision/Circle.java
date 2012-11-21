@@ -31,6 +31,9 @@ public class Circle implements Easifyable, Projectable {
 
 	protected Vec2 center;
 	protected float radius;
+	// For pooling:
+	protected Vec2 vertex0 = new Vec2();
+	protected Vec2 vertex1 = new Vec2();
 
 	public Circle(float x, float y, float radius) {
 		this.center = new Vec2(x, y);
@@ -101,12 +104,13 @@ public class Circle implements Easifyable, Projectable {
 	 * @see org.matheusdev.util.collision.Projectable#project(org.matheusdev.util.vecmath.Vec2)
 	 */
 	@Override
-	public Vec2 project(Vec2 axis) {
-		Vec2 vertex0 = new Vec2(axis.x, axis.y).scale(radius).translate(center.x, center.y);
-		Vec2 vertex1 = new Vec2(-axis.x, -axis.y).scale(radius).translate(center.x, center.y);
+	public Vec2 project(Vec2 axis, Vec2 dest) {
+		if (dest == null) dest = new Vec2();
+		vertex0.set(axis.x, axis.y).scale(radius).translate(center.x, center.y);
+		vertex1.set(-axis.x, -axis.y).scale(radius).translate(center.x, center.y);
 		float p0 = Vec2.dot(vertex0, axis);
 		float p1 = Vec2.dot(vertex1, axis);
-		return new Vec2(Math.min(p0, p1), Math.max(p0, p1));
+		return dest.set(Math.min(p0, p1), Math.max(p0, p1));
 	}
 
 }

@@ -120,6 +120,7 @@ public class Quad implements SATObject {
 		return centerCached;
 	}
 
+	@Override
 	public Vec2[] getTransformedVertices() {
 		verticesCached[0] = topLeftCached;
 		verticesCached[1] = topRightCached;
@@ -153,16 +154,17 @@ public class Quad implements SATObject {
 	 * @see org.matheusdev.util.collision.SATObject#project(org.matheusdev.util.vecmath.Vec2)
 	 */
 	@Override
-	public Vec2 project(Vec2 axis) {
+	public Vec2 project(Vec2 axis, Vec2 dest) {
+		if (dest == null) dest = new Vec2();
+
 		final float p0 = Vec2.dot(axis, topLeftCached);
 		final float p1 = Vec2.dot(axis, topRightCached);
 		final float p2 = Vec2.dot(axis, botRightCached);
 		final float p3 = Vec2.dot(axis, botLeftCached);
 
-		final float min = Math.min(Math.min(Math.min(p0, p1), p2), p3);
-		final float max = Math.max(Math.max(Math.max(p0, p1), p2), p3);
-
-		return new Vec2(min, max);
+		return dest.set(
+				Math.min(Math.min(Math.min(p0, p1), p2), p3),
+				Math.max(Math.max(Math.max(p0, p1), p2), p3));
 	}
 
 	/* (non-Javadoc)

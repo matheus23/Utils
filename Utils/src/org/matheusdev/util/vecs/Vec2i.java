@@ -19,16 +19,57 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package org.matheusdev.util.collision;
-
-import org.matheusdev.util.vecmath.Vec2;
+package org.matheusdev.util.vecs;
 
 /**
  * @author matheusdev
  *
  */
-public interface Projectable {
+public class Vec2i {
+	protected static final Vec2i instance = new Vec2i(0, 0);
 
-	public Vec2 project(Vec2 axis, Vec2 dest);
+	public static Vec2i get(int x, int y) {
+		return instance.set(x, y);
+	}
+
+	public static Vec2i get() {
+		return get(0, 0);
+	}
+
+	public int x;
+	public int y;
+
+	public Vec2i(int x, int y) {
+		set(x, y);
+	}
+
+	public Vec2i(Vec2i other) {
+		set(other.x, other.y);
+	}
+
+	public Vec2i set(int x, int y) {
+		this.x = x;
+		this.y = y;
+		return this;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null) return false;
+		if (obj.getClass() != this.getClass()) return false;
+		Vec2i other = (Vec2i) obj;
+		if (this.x == other.x && this.y == other.y) return true;
+		return false;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int hashcode = 1;
+		hashcode = prime * hashcode + x;
+		hashcode = prime * hashcode + y;
+
+		return hashcode;
+	}
 
 }

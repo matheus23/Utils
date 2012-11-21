@@ -142,6 +142,7 @@ public class Poly implements SATObject {
 		return normals[NumUtils.clamp(side, normals.length)];
 	}
 
+	@Override
 	public Vec2[] getTransformedVertices() {
 		return verticesCached;
 	}
@@ -158,7 +159,9 @@ public class Poly implements SATObject {
 	 * @see org.matheusdev.util.collision.SATObject#project(org.matheusdev.util.vecmath.Vec2)
 	 */
 	@Override
-	public Vec2 project(Vec2 axis) {
+	public Vec2 project(Vec2 axis, Vec2 dest) {
+		if (dest == null) dest = new Vec2();
+
 		float min = Vec2.dot(axis, verticesCached[0]);
 		float max = min;
 
@@ -171,7 +174,7 @@ public class Poly implements SATObject {
 				max = p;
 			}
 		}
-		return new Vec2(min, max);
+		return dest.set(min, max);
 	}
 
 	/* (non-Javadoc)

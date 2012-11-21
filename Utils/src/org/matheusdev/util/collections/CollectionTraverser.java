@@ -19,16 +19,26 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package org.matheusdev.util.collision;
+package org.matheusdev.util.collections;
 
-import org.matheusdev.util.vecmath.Vec2;
 
 /**
  * @author matheusdev
  *
  */
-public interface Projectable {
+public interface CollectionTraverser<E> {
 
-	public Vec2 project(Vec2 axis, Vec2 dest);
+	/**
+	 * @param position the position of the given cell, where the element is stored.
+	 * @param element the element to handle.
+	 * @return whether to go on with searching / querying or not.
+	 */
+	/**
+	 * @param xPosition the x-position of the given cell, where the element is stored.
+	 * @param yPosition the y-position of the given cell, where the element is stored.
+	 * @param element the element to handle.
+	 * @return whether to go on with searching / querying or not.
+	 */
+	public boolean handleElement(int xPosition, int yPosition, E element);
 
 }
