@@ -24,6 +24,7 @@ package org.matheusdev.util.collections;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map.Entry;
 
 import org.matheusdev.util.collision.Rect;
@@ -36,6 +37,7 @@ import org.matheusdev.util.vecs.Vec2i;
 public class GridCollection<E extends CollectionEntity> {
 
 	protected final HashMap<Vec2i, ArrayList<E>> map;
+	protected final ArrayList<E> queryList;
 	protected int width;
 	protected int height;
 
@@ -43,6 +45,7 @@ public class GridCollection<E extends CollectionEntity> {
 		this.width = elementWidth;
 		this.height = elementHeight;
 		this.map = new HashMap<>();
+		this.queryList = new ArrayList<>();
 	}
 
 	public void add(E e) {
@@ -95,6 +98,27 @@ public class GridCollection<E extends CollectionEntity> {
 		}
 	}
 
+	public List<E> query(Rect region) {
+		queryList.clear();
+
+		int beginx = ((int) region.x) / width;
+		int beginy = ((int) region.y) / height;
+		int endx = ((int) (region.x + region.w)) / width;
+		int endy = ((int) (region.y + region.h)) / height;
+
+		for (int y = beginy; y <= endy; y++) {
+			for (int x = beginx; x <= endx; x++) {
+				Vec2i pos = Vec2i.get(x, y);
+				ArrayList<E> elements = map.get(pos);
+
+				if (elements != null) {
+					queryList.addAll(elements);
+				}
+			}
+		}
+		return queryList;
+	}
+
 	public void update() {
 		update(width, height);
 	}
@@ -126,7 +150,7 @@ public class GridCollection<E extends CollectionEntity> {
 			if (list.isEmpty()) {
 				// This comment is somehow famous...
 				// (For reference, see source code from "ArrayList#clear()"...)
-		        // Let gc do its work
+				// Let gc do its work
 				map.put(entry.getKey(), null);
 			} else {
 				list.clear();
