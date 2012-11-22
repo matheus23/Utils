@@ -21,6 +21,8 @@
  */
 package org.matheusdev.util.res;
 
+import java.util.HashMap;
+
 /**
  * @author matheusdev
  *
@@ -28,9 +30,10 @@ package org.matheusdev.util.res;
 public abstract class SpriteResource {
 
 	public SpriteResource(int x, int y, int w, int h) {
-		createSprite(x, y, w, h);
 	}
 
-	protected abstract void createSprite(int x, int y, int w, int h);
+	protected abstract HashMap<String, String> additionalAttributes();
+
+	protected abstract void handleAttributes(HashMap<String, String> attributes);
 
 }

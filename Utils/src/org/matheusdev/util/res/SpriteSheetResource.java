@@ -46,4 +46,8 @@ public abstract class SpriteSheetResource<Sprite extends SpriteResource> {
 		return sprites.get(name);
 	}
 
+	protected abstract HashMap<String, String> additionalAttributes();
+
+	protected abstract void handleAttributes(HashMap<String, String> attributes);
+
 }

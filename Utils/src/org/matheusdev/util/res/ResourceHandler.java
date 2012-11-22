@@ -26,6 +26,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map.Entry;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
@@ -72,9 +74,22 @@ public abstract class ResourceHandler<Sheet extends SpriteSheetResource<Sprite>,
 						return;
 					}
 					// Let the sub-class load the SpriteSheet and add it to the HashMap:
-					currentSheet = resources.createSheet(
+					Sheet sheet = resources.createSheet(
 							Thread.currentThread().getContextClassLoader().getResourceAsStream(source));
-					resources.put(name, currentSheet);
+					// Handle additional attributes:
+					HashMap<String, String> attribs = sheet.additionalAttributes();
+					Iterator<Entry<String, String>> itr = attribs.entrySet().iterator();
+					while (itr.hasNext()) {
+						Entry<String, String> entry = itr.next();
+
+						String val = attributes.getValue(entry.getKey());
+						if (val != null) {
+							attribs.put(entry.getKey(), val);
+						}
+					}
+					sheet.handleAttributes(attribs);
+					resources.put(name, sheet);
+					currentSheet = sheet;
 				}
 				break;
 			case "sprite":
@@ -84,7 +99,8 @@ public abstract class ResourceHandler<Sheet extends SpriteSheetResource<Sprite>,
 						// Sprite tags should look like this:
 						// <sprite
 						//     name="grass_block"
-						//     bounds="0,0,16,16">
+						//     bounds="0,0,16,16"
+						//     *additional="attributes"*>
 						// </sprite>
 						String name = null;
 						int x = 0;
@@ -123,7 +139,20 @@ public abstract class ResourceHandler<Sheet extends SpriteSheetResource<Sprite>,
 							System.err.println("Error: The sprite's [name: " + name + "] bounds [" + x + "," + y + "," + w + "," + h + "] are invalid or unset. Discarded");
 							return;
 						}
-						currentSheet.put(name, resources.createSprite(currentSheet, x, y, w, h));
+						Sprite sprite = resources.createSprite(currentSheet, x, y, w, h);
+						currentSheet.put(name, sprite);
+						// Handle additional attributes:
+						HashMap<String, String> attribs = sprite.additionalAttributes();
+						Iterator<Entry<String, String>> itr = attribs.entrySet().iterator();
+						while (itr.hasNext()) {
+							Entry<String, String> entry = itr.next();
+
+							String val = attributes.getValue(entry.getKey());
+							if (val != null) {
+								attribs.put(entry.getKey(), val);
+							}
+						}
+						sprite.handleAttributes(attribs);
 					} else {
 						System.out.println("Warning: One Sprite is not inside a sheet tag. Discarded.");
 					}
