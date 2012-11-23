@@ -29,9 +29,6 @@ import java.util.HashMap;
  */
 public abstract class SpriteResource {
 
-	public SpriteResource(int x, int y, int w, int h) {
-	}
-
 	protected abstract HashMap<String, String> additionalAttributes();
 
 	protected abstract void handleAttributes(HashMap<String, String> attributes);

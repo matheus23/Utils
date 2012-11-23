@@ -74,8 +74,7 @@ public abstract class ResourceHandler<Sheet extends SpriteSheetResource<Sprite>,
 						return;
 					}
 					// Let the sub-class load the SpriteSheet and add it to the HashMap:
-					Sheet sheet = resources.createSheet(
-							Thread.currentThread().getContextClassLoader().getResourceAsStream(source));
+					Sheet sheet = resources.createSheet();
 					// Handle additional attributes:
 					HashMap<String, String> attribs = sheet.additionalAttributes();
 					Iterator<Entry<String, String>> itr = attribs.entrySet().iterator();
@@ -88,6 +87,10 @@ public abstract class ResourceHandler<Sheet extends SpriteSheetResource<Sprite>,
 						}
 					}
 					sheet.handleAttributes(attribs);
+					sheet.load(
+							Thread.currentThread()
+							.getContextClassLoader()
+							.getResourceAsStream(source));
 					resources.put(name, sheet);
 					currentSheet = sheet;
 				}
@@ -187,7 +190,7 @@ public abstract class ResourceHandler<Sheet extends SpriteSheetResource<Sprite>,
 		sheets = new HashMap<>();
 	}
 
-	protected abstract Sheet createSheet(InputStream stream);
+	protected abstract Sheet createSheet();
 	protected abstract Sprite createSprite(Sheet sheet, int x, int y, int w, int h);
 
 	public void load(InputStream xmlInput) throws SAXException, IOException, ParserConfigurationException {
