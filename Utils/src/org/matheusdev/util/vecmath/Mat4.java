@@ -438,4 +438,27 @@ public class Mat4 implements MatFloatBuffable<Mat4> {
 		return dest;
 	}
 
+	public static Mat4 ortho(float left, float right, float top, float bottom, float near, float far, Mat4 dest) {
+		dest = getDest(dest);
+
+		float xOrtho = 2f / (right - left);
+		float yOrtho = 2f / (top - bottom);
+		float zOrtho = -2f / (far - near);
+
+		float tx = -(right + left) / (right - left);
+		float ty = -(top + bottom) / (top - bottom);
+		float tz = -(far + near) / (far - near);
+
+		dest.zero();
+		dest.m00 = xOrtho;
+		dest.m11 = yOrtho;
+		dest.m22 = zOrtho;
+		dest.m33 = 1;
+		dest.m30 = tx;
+		dest.m31 = ty;
+		dest.m32 = tz;
+
+		return dest;
+	}
+
 }
