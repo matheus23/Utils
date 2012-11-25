@@ -19,6 +19,8 @@ public class GameLoop implements Runnable {
 	protected final Type type;
 	protected final long framerate;
 
+	protected volatile boolean stopped;
+	protected volatile boolean paused;
 	protected Thread runner;
 	protected ThreadGroup group;
 
@@ -28,11 +30,36 @@ public class GameLoop implements Runnable {
 		this.framerate = framerate;
 	}
 
-	public void start() {
-		group = new ThreadGroup("GameLoop Group");
-		runner = new Thread(group, this, "GameLoop");
-		runner.setPriority(Thread.MAX_PRIORITY);
-		runner.start();
+	public synchronized void start() {
+		if (runner == null) {
+			group = new ThreadGroup("GameLoop Group");
+			runner = new Thread(group, this, "GameLoop");
+			runner.setPriority(Thread.MAX_PRIORITY);
+			runner.start();
+		}
+	}
+
+	public synchronized void stop() {
+		if (runner != null) {
+			stopped = true;
+			runner = null;
+		}
+	}
+
+	public void pause() {
+		synchronized (this) {
+			paused = true;
+		}
+	}
+
+	public void resume() {
+		synchronized (this) {
+			paused = false;
+		}
+	}
+
+	public boolean isPaused() {
+		return paused;
 	}
 
 	@Override
@@ -61,7 +88,7 @@ public class GameLoop implements Runnable {
 
 	protected void runSimple() {
 		FpsUpdater fps = new FpsUpdater(looper, framerate);
-		while (!looper.isCloseRequested()) {
+		while (!looper.isCloseRequested() && !stopped) {
 			looper.tick(fps.next());
 			looper.render(fps.getFps());
 		}
@@ -75,7 +102,7 @@ public class GameLoop implements Runnable {
 				return System.nanoTime();
 			}
 		};
-		while (!looper.isCloseRequested()) {
+		while (!looper.isCloseRequested() && !stopped) {
 			looper.tick(fps.next());
 			looper.render(fps.getFps());
 			sync.sync(framerate);
@@ -91,7 +118,7 @@ public class GameLoop implements Runnable {
 		long tickBeginTime = looper.getNanoTime();
 		long now = looper.getNanoTime();
 
-		while (!looper.isCloseRequested()) {
+		while (!looper.isCloseRequested() && !stopped) {
 			do {
 				tickBeginTime = looper.getNanoTime();
 				ups.next();

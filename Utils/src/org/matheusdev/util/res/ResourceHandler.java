@@ -39,6 +39,20 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 /**
+ * The xml files this ResourceHandler handles, always has the form:
+ * <pre>
+ * &lt;images&gt;
+ *   &lt;sheet
+ *     name="name"
+ *     source="source.png"&gt;
+ *     &lt;sprite
+ *       name="player"
+ *       bounds="X,Y,W,H"&gt;
+ *     &lt;/sprite&gt;
+ *   &lt;/sheet&gt;
+ * &lt;/images&gt;
+ * </pre>
+ *
  * @author matheusdev
  *
  */
