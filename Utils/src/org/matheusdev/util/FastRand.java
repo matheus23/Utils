@@ -42,6 +42,20 @@ public class FastRand {
 		return System.currentTimeMillis() + System.nanoTime();
 	}
 
+	/**
+	 * <p>Use this with care, and only if you know what
+	 * you are doing!</p>
+	 * <p>Setting the seed again, will make the RNG
+	 * "jump" to a position in the random number sequence,
+	 * which means, if you set the seed to 0, then the
+	 * exactly same numbers will be generated, if you
+	 * set the seed to 0 again.</p>
+	 * @param seed the seed.
+	 */
+	public void setSeed(long seed) {
+		this.seed = seed;
+	}
+
 	/* RANDOM INT AND LONG: */
 
 	public long randLong() {
