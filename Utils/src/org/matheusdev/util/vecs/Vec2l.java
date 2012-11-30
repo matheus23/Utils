@@ -65,6 +65,10 @@ public class Vec2l {
 
 	@Override
 	public int hashCode() {
+		return hashCode(x, y);
+	}
+
+	public int hashCode(long x, long y) {
 		final int prime = 31;
 		int hashcode = 1;
 		hashcode = prime * hashcode + (int) x;

@@ -64,6 +64,10 @@ public class Vec2i {
 
 	@Override
 	public int hashCode() {
+		return hashCode(x, y);
+	}
+
+	public static int hashCode(int x, int y) {
 		final int prime = 31;
 		int hashcode = 1;
 		hashcode = prime * hashcode + x;
