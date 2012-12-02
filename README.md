@@ -53,5 +53,5 @@ MatrixNf values = new SimplexNoiseN(
         new Random(),                        // Random number generator RNG
         new FloatInterpolationCubicSpline(), // Value interpolator
         64, 256, 256                         // Dimensions (3D)
-        );
+        ).get();
 ```
