@@ -6,12 +6,12 @@ package org.matheusdev.util.gameloop;
  */
 public interface GameLooper extends NanoTime {
 
-	public void init();
+	public void init(FpsUpdater fpsUpdater, FpsUpdater upsUpdater);
 
 	public boolean isCloseRequested();
 
 	public void tick(double delta);
-	public void render(double fps);
+	public void render();
 
 	public void dispose();
 

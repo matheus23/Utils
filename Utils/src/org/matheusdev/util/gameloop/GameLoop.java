@@ -18,6 +18,8 @@ public class GameLoop implements Runnable {
 	protected final GameLooper looper;
 	protected final Type type;
 	protected final long framerate;
+	protected FpsUpdater fps;
+	protected FpsUpdater ups;
 
 	protected volatile boolean stopped;
 	protected volatile boolean paused;
@@ -64,8 +66,6 @@ public class GameLoop implements Runnable {
 
 	@Override
 	public void run() {
-		looper.init();
-
 		try {
 			switch (type) {
 			case NO_LIMIT:
@@ -87,37 +87,45 @@ public class GameLoop implements Runnable {
 	}
 
 	protected void runSimple() {
-		FpsUpdater fps = new FpsUpdater(looper, framerate);
+		fps = new FpsUpdater(looper, framerate);
+		ups = fps;
+
+		looper.init(fps, ups);
 		while (!looper.isCloseRequested() && !stopped) {
 			looper.tick(fps.next());
-			looper.render(fps.getFps());
+			looper.render();
 		}
 	}
 
 	protected void runDelta() {
-		FpsUpdater fps = new FpsUpdater(looper, framerate);
+		fps = new FpsUpdater(looper, framerate);
+		ups = fps;
 		Sync sync = new Sync() {
 			@Override
 			public long getTime() {
 				return System.nanoTime();
 			}
 		};
+
+		looper.init(fps, ups);
 		while (!looper.isCloseRequested() && !stopped) {
 			looper.tick(fps.next());
-			looper.render(fps.getFps());
+			looper.render();
 			sync.sync(framerate);
 		}
 	}
 
 	protected void runLimited() {
-		FpsUpdater fps = new FpsUpdater(looper, framerate);
-		FpsUpdater ups = new FpsUpdater(looper, framerate);
+		fps = new FpsUpdater(looper, framerate);
+		ups = new FpsUpdater(looper, framerate);
+
 		long lastRender = looper.getNanoTime();
 		long maxTime = NANOS_PER_SECOND / framerate;
 		long lastTickDuration = 0;
 		long tickBeginTime = looper.getNanoTime();
 		long now = looper.getNanoTime();
 
+		looper.init(fps, ups);
 		while (!looper.isCloseRequested() && !stopped) {
 			do {
 				tickBeginTime = looper.getNanoTime();
@@ -129,7 +137,7 @@ public class GameLoop implements Runnable {
 
 			lastRender = looper.getNanoTime();
 			fps.next();
-			looper.render(fps.getFps());
+			looper.render();
 		}
 	}
 
