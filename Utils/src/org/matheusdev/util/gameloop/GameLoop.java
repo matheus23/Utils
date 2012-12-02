@@ -141,4 +141,11 @@ public class GameLoop implements Runnable {
 		}
 	}
 
+	public FpsUpdater getFps() {
+		return fps;
+	}
+
+	public FpsUpdater getUps() {
+		return ups;
+	}
 }
