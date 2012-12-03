@@ -28,13 +28,16 @@ import java.net.URL;
  * @author matheusdev
  *
  */
-public class StreamUtils {
+public final class StreamUtils {
 
-	public InputStream getJarResource(String path) {
+	private StreamUtils() {
+	}
+
+	public static InputStream getJarResource(String path) {
 		return Thread.currentThread().getContextClassLoader().getResourceAsStream(path);
 	}
 
-	public URL getJarResourceURL(String path) {
+	public static URL getJarResourceURL(String path) {
 		return Thread.currentThread().getContextClassLoader().getResource(path);
 	}
 
