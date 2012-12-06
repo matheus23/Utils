@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package org.matheusdev.util;
 
@@ -15,15 +15,15 @@ import java.io.InputStreamReader;
  *
  */
 public final class TextFileReader {
-	
+
 	// Invisible Constructor.
 	private TextFileReader() {}
-	
-	public String readTextFile(File file) throws IOException {
+
+	public static String readTextFile(File file) throws IOException {
 		return readText(new FileInputStream(file));
 	}
-	
-	public String readText(InputStream stream) throws IOException {
+
+	public static String readText(InputStream stream) throws IOException {
 		BufferedReader read = new BufferedReader(new InputStreamReader(stream));
 		StringBuilder str = new StringBuilder();
 		String line;
@@ -32,5 +32,5 @@ public final class TextFileReader {
 		}
 		return str.toString();
 	}
-	
+
 }
