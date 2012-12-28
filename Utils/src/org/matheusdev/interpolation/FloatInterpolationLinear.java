@@ -2,6 +2,8 @@ package org.matheusdev.interpolation;
 
 
 /**
+ * <p>This class interpolates the given values linearely.</p>
+ *
  * @author matheusdev
  *
  */

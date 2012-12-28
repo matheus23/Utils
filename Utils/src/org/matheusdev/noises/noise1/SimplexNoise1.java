@@ -5,6 +5,10 @@ import java.util.Random;
 import org.matheusdev.interpolation.FloatInterpolation;
 
 /**
+ * <p>Computes 1-Dimensional Simplex noise.</p>
+ * <p>One can use this to generate Terraria-like
+ * 2D surfaces, for example.</p>
+ *
  * @author matheusdev
  *
  */
@@ -38,10 +42,24 @@ public class SimplexNoise1 {
 
 	protected final float[] values;
 
+	/**
+	 * @param length the length of the array the noise should generate.
+	 * @param octaves the number of octaves (layers) see {@link org.matheusdev.noises.noise1.SimplexNoiseLayer1}.
+	 * @param rand a {@link java.util.Random} instance for generating random numbers.
+	 * @param interpolator a {@link org.matheusdev.interpolation.FloatInterpolation} instance for interpolating numbers.
+	 * This parameter affects the output of this system. FloatInterpolationCubigSpline is recommended.
+	 */
 	public SimplexNoise1(final int length, final int octaves, final Random rand, final FloatInterpolation interpolator) {
 		this(length, layersFromOctaves(length, octaves, 4, 2, rand, interpolator), importancesFromOctaves(octaves, 2), rand);
 	}
 
+	/**
+	 * <p>Creates the Simplex noise with the given layers and it's weights.</p>
+	 * @param length the length of the array the noise should generate.
+	 * @param layers the layers of generated simplex-noise-layers to combine.
+	 * @param weights the weights of each layer.
+	 * @param rand a {@link java.util.Random} instance for generating random numbers
+	 */
 	public SimplexNoise1(final int length, final SimplexNoiseLayer1[] layers, final float[] weights, final Random rand) {
 		if (layers.length != weights.length) throw new IllegalArgumentException("layers.length != weights.length");
 
@@ -75,6 +93,9 @@ public class SimplexNoise1 {
 		return offset;
 	}
 
+	/**
+	 * @return the generated values.
+	 */
 	public float[] get() {
 		return values;
 	}

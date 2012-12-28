@@ -2,6 +2,12 @@ package org.matheusdev.interpolation;
 
 
 /**
+ * <p>This class interpolates the given values linearly.</p>
+ * <p>Opposing to
+ * {@link org.matheusdev.interpolation.FloatInterpolationLinear}
+ * this class does not use the x0 and x1 parameters and is there
+ * fore faster.</p>
+ *
  * @author matheusdev
  *
  */

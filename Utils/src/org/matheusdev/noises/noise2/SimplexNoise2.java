@@ -6,6 +6,9 @@ import org.matheusdev.interpolation.FloatInterpolation;
 import org.matheusdev.util.matrix.matrix2.MatrixN2f;
 
 /**
+ * <p>Computes 2-Dimensional Simplex noise.</p>
+ * <p>One can use this to generate Minecraft-like
+ * terrain, for example.</p>
  * @author matheusdev
  *
  */
@@ -40,10 +43,26 @@ public class SimplexNoise2 {
 
 	protected final MatrixN2f values;
 
+	/**
+	 * @param width the width of the noise image to create.
+	 * @param height the height of the noise image to create.
+	 * @param octaves the number of layers of simplex noise layers to combine. see {@link org.matheusdev.noises.noise2.SimplexNoiseLayer2}
+	 * @param rand a {@link java.util.Random} instance for generating random numbers.
+	 * @param interpolator a {@link org.matheusdev.interpolation.FloatInterpolation} instance for interpolating numbers.
+	 * This parameter affects the output of this system. FloatInterpolationCubigSpline is recommended.
+	 */
 	public SimplexNoise2(final int width, final int height, final int octaves, final Random rand, final FloatInterpolation interpolator) {
 		this(width, height, layersFromOctaves(width, height, octaves, 4, 2, rand, interpolator), importancesFromOctaves(octaves, 2), rand);
 	}
 
+	/**
+	 * <p>Creates the Simplex noise with the given layers and it's weights.</p>
+	 * @param width the width of the noise image to create.
+	 * @param height the height of the noise image to create.
+	 * @param layers the layers of generated simplex-noise-layers to combine.
+	 * @param weights the weights of each layer.
+	 * @param rand a {@link java.util.Random} instance for generating random numbers.
+	 */
 	public SimplexNoise2(final int width, final int height, final SimplexNoiseLayer2[] layers, final float[] weights, final Random rand) {
 		if (layers.length != weights.length) throw new IllegalArgumentException("layers.length != weights.length");
 
@@ -82,6 +101,9 @@ public class SimplexNoise2 {
 		return offset;
 	}
 
+	/**
+	 * @return the generated values as {@link org.matheusdev.util.matrix.matrix2.MatrixN2f}.
+	 */
 	public MatrixN2f get() {
 		return values;
 	}

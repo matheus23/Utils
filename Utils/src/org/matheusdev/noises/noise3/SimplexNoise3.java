@@ -6,6 +6,12 @@ import org.matheusdev.interpolation.FloatInterpolation;
 import org.matheusdev.util.matrix.matrix3.MatrixN3f;
 
 /**
+ * <p>Computes 3-Dimesional Simplex noise.</p>
+ * <p>If you want to use this class you really
+ * have to know what you're doing ;)</p>
+ * <p>You could generate a smooth animation of
+ * 2D noises for exmaple ;)</p>
+ *
  * @author matheusdev
  *
  */
@@ -41,10 +47,28 @@ public class SimplexNoise3 {
 
 	protected final MatrixN3f values;
 
+	/**
+	 * @param width the width of the noise image to create.
+	 * @param height the height of the noise image to create.
+	 * @param depth the depth of the noise image to create.
+	 * @param octaves the number of layers of simplex noise layers to combine. see {@link org.matheusdev.noises.noise3.SimplexNoiseLayer3}
+	 * @param rand a {@link java.util.Random} instance for generating random numbers.
+	 * @param interpolator a {@link org.matheusdev.interpolation.FloatInterpolation} instance for interpolating numbers.
+	 * This parameter affects the output of this system. FloatInterpolationCubigSpline is recommended.
+	 */
 	public SimplexNoise3(final int width, final int height, final int depth, final int octaves, final Random rand, final FloatInterpolation interpolator) {
 		this(width, height, depth, layersFromOctaves(width, height, depth, octaves, 4, 2, rand, interpolator), importancesFromOctaves(octaves, 2), rand);
 	}
 
+	/**
+	 * <p>Creates the Simplex noise with the given layers and it's weights.</p>
+	 * @param width the width of the noise image to create.
+	 * @param height the height of the noise image to create.
+	 * @param depth the depth of the noise image to create.
+	 * @param layers the layers of generated simplex-noise-layers to combine.
+	 * @param weights the weights of each layer.
+	 * @param rand a {@link java.util.Random} instance for generating random numbers.
+	 */
 	public SimplexNoise3(final int width, final int height, final int depth, final SimplexNoiseLayer3[] layers, final float[] weights, final Random rand) {
 		if (layers.length != weights.length) throw new IllegalArgumentException("layers.length != weights.length");
 
@@ -86,6 +110,9 @@ public class SimplexNoise3 {
 		return offset;
 	}
 
+	/**
+	 * @return the generated values as {@link org.matheusdev.util.matrix.matrix3.MatrixN3f}.
+	 */
 	public MatrixN3f get() {
 		return values;
 	}
