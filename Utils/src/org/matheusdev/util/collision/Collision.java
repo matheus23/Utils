@@ -72,6 +72,7 @@ public final class Collision {
 		return !noProjOverlap(proj0, proj1);
 	}
 
+	@Deprecated
 	public static Vec2 polyVsPolyMTV(SATObject obj0, SATObject obj1) {
 		if (circleVsCircle(obj0.getBounds(), obj1.getBounds())) {
 			objectsTested++;
