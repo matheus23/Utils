@@ -76,4 +76,13 @@ public class Vec2l {
 
 		return hashcode;
 	}
+
+	public static long longHashCode(long x, long y) {
+		final long prime = 31;
+		long hashcode = 1;
+		hashcode = prime * hashcode + x;
+		hashcode = prime * hashcode + y;
+
+		return hashcode;
+	}
 }
