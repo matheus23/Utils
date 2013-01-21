@@ -68,7 +68,7 @@ public class Vec2l {
 		return hashCode(x, y);
 	}
 
-	public int hashCode(long x, long y) {
+	public static int hashCode(long x, long y) {
 		final int prime = 31;
 		int hashcode = 1;
 		hashcode = prime * hashcode + (int) x;
