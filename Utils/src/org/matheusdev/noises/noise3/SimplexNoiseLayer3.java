@@ -9,7 +9,7 @@ import org.matheusdev.util.matrix.matrix3.MatrixN3f;
  * @author matheusdev
  *
  */
-public class SimplexNoiseLayer3 {
+public class SimplexNoiseLayer3 implements Noise3 {
 
 	protected final int width;
 	protected final int height;
@@ -94,5 +94,9 @@ public class SimplexNoiseLayer3 {
 	public MatrixN3f get() {
 		return values;
 	}
+
+    public float get(float x, float y, float z) {
+        return values.get((int) x, (int) y, (int) z);
+    }
 
 }

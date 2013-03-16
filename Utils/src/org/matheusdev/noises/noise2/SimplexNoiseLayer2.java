@@ -9,7 +9,7 @@ import org.matheusdev.util.matrix.matrix2.MatrixN2f;
  * @author matheusdev
  *
  */
-public class SimplexNoiseLayer2 {
+public class SimplexNoiseLayer2 implements Noise2 {
 
 	protected final int width;
 	protected final int height;
@@ -73,5 +73,9 @@ public class SimplexNoiseLayer2 {
 	public MatrixN2f get() {
 		return values;
 	}
+
+    public float get(float x, float y) {
+        return values.get((int) x, (int) y);
+    }
 
 }

@@ -15,7 +15,7 @@ import org.matheusdev.util.matrix.matrix3.MatrixN3f;
  * @author matheusdev
  *
  */
-public class SimplexNoise3 {
+public class SimplexNoise3 implements Noise3 {
 
 	protected static SimplexNoiseLayer3[] layersFromOctaves(
 			final int width,
@@ -116,5 +116,9 @@ public class SimplexNoise3 {
 	public MatrixN3f get() {
 		return values;
 	}
+
+    public float get(float x, float y, float z) {
+        return values.get((int) x, (int) y, (int) z);
+    }
 
 }
