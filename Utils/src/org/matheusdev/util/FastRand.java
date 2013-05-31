@@ -22,6 +22,8 @@
 package org.matheusdev.util;
 
 
+import java.util.Random;
+
 /**
  * @author matheusdev
  *

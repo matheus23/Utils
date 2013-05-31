@@ -48,10 +48,12 @@ public class SimplexNoiseLayerLazy2 implements Noise2 {
 	}
 
 	public float get(float x, float y) {
-		final int cellX0 = ((int) x / density);
-		final int cellY0 = ((int) y / density);
-		final int cellX1 = ((int) x / density) + 1;
-		final int cellY1 = ((int) y / density) + 1;
+		// Bugfix thanks to "marcuiulian13"
+		// TODO: Optimize flooring algorithm...
+		final int cellX0 = (int) Math.floor(x / density);
+		final int cellY0 = (int) Math.floor(y / density);
+		final int cellX1 = (int) Math.floor(x / density) + 1;
+		final int cellY1 = (int) Math.floor(y / density) + 1;
 
 		final float value00 = getRand(cellX0, cellY0).randBool() ? -1f : 1f;
 		final float value10 = getRand(cellX1, cellY0).randBool() ? -1f : 1f;
@@ -76,7 +78,7 @@ public class SimplexNoiseLayerLazy2 implements Noise2 {
         return interpolationVert;
 	}
 
-    private final static long hashWang(long key) {
+    private static long hashWang(long key) {
         key = (~key) + (key << 21); // key = (key << 21) - key - 1;
         key = key ^ (key >>> 24);
         key = (key + (key << 3)) + (key << 8); // key * 265

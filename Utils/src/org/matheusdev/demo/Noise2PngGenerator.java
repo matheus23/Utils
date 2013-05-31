@@ -1,10 +1,6 @@
 package org.matheusdev.demo;
 
-import org.matheusdev.interpolation.FloatInterpolation;
-import org.matheusdev.interpolation.FloatInterpolationFunc;
 import org.matheusdev.noises.noise2.Noise2;
-import org.matheusdev.noises.noise2.SimplexNoise2;
-import org.matheusdev.util.matrix.matrix2.MatrixN2f;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -30,17 +26,23 @@ public class Noise2PngGenerator {
     }
 
     public static void gen(Noise2 noise, int width, int height) {
-        System.out.println("Generating.");
-        BufferedImage img = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+	    long before = System.currentTimeMillis();
+	    Random rand = new Random();
+	    int xoffset = rand.nextInt() % 10000000;
+	    int yoffset = rand.nextInt() % 10000000;
+        System.out.println("Generating. offset: " + xoffset + ", " + yoffset);
+	    System.out.println("...");
+	    BufferedImage img = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
                 //img.setRGB(x, y, ((int)(((values.get(x, y)+1)/2)*10000)) | 0xFF000000);
-                float val = (noise.get(x, y)+1)/2;
+                float val = (noise.get(x + xoffset, y + yoffset)+1)/2;
                 int greyscale = (int)(val * 255);
                 img.setRGB(x, y, toRGB(greyscale, greyscale, greyscale, 255));
             }
         }
 
+	    System.out.println("Done generating. Time: " + (System.currentTimeMillis()-before));
         System.out.println("Writing to file.");
         String directory = "simplex_noise_2d";
         File dir = new File(directory);
