@@ -129,11 +129,15 @@ public final class Collision {
 			objectsTested++;
 			Vec2[] vertices = obj.getTransformedVertices();
 
-			for (int i = 0; i < vertices.length; i++) {
+			for (int i = 0; i < vertices.length - 1; i++) {
 				if (axes[i] == null) axes[i] = new Vec2();
 
-				axes[i].set(circ.getCenter().x - vertices[i].x, circ.getCenter().y - vertices[i].y).normalize();
+				// axes[i] = vertices[i+1] - vertices[i]
+				Vec2.sub(vertices[i+1], vertices[i], axes[i]);
+				axes[i].normalize();
 			}
+			// null-terminate, so we don't run tests on old, cached axes.
+			axes[vertices.length - 1] = null;
 			return seperatingAxesTest(axes, obj, circ);
 		} else {
 			return false;
@@ -185,5 +189,4 @@ public final class Collision {
 		float d1 = proj1.x - proj0.y;
 		return Math.abs((d0 < -d1) ? d0 : d1);
 	}
-
 }
