@@ -129,15 +129,18 @@ public final class Collision {
 			objectsTested++;
 			Vec2[] vertices = obj.getTransformedVertices();
 
-			for (int i = 0; i < vertices.length - 1; i++) {
-				if (axes[i] == null) axes[i] = new Vec2();
+			for (int i = 1; i < vertices.length; i++) {
+				int current = i-1;
+				int next = i;
 
-				// axes[i] = vertices[i+1] - vertices[i]
-				Vec2.sub(vertices[i+1], vertices[i], axes[i]);
-				axes[i].normalize();
+				if (axes[current] == null) axes[current] = new Vec2();
+
+				// axes[current] = vertices[next] - vertices[current]
+				Vec2.sub(vertices[next], vertices[current], axes[current]);
+				axes[current].normalize().perpRight();
 			}
 			// null-terminate, so we don't run tests on old, cached axes.
-			axes[vertices.length - 1] = null;
+			axes[vertices.length] = null;
 			return seperatingAxesTest(axes, obj, circ);
 		} else {
 			return false;
